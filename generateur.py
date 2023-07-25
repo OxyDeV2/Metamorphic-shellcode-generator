@@ -26,7 +26,7 @@ shellcode = ""
 
 # mov rax, rdx
 # xor rax, rdx
-# xor rdx, rdx
+# xor rdx, rdx -> 4889d04831d04831d2
 
  ###### SYSCALL EXIT ######
 
