@@ -14,10 +14,10 @@ list_exit = ["b03c", "b0632c27", "b01e041e", "b23c4889d0"]
 shellcode += random.choice(list_exit)
 print(shellcode)
 
-#def main()
+def shellcodize(s):
+    shellcode = 'X'
+    shellcode += 'X'.join(a+b for a,b in zip(s[::2], s[1::2]))
+    shellcode = shellcode.replace('X', '\\x')
+    print(shellcode)
 
-#def shellcodize(s):
-#    shellcode = 'X'
-#    shellcode += 'X'.join(a+b for a,b in zip(s[::2], s[1::2]))
-#    shellcode = shellcode.replace('X', '\\x')
-#    return(shellcode)
+shellcodize(shellcode)
