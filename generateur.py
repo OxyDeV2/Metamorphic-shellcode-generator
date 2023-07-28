@@ -271,7 +271,6 @@ shellcode += random.choice(list_lastcallsys)
 # ASCII Art pour flex
 print(shellcodeart)
 
-
 print("------------\n")
 print("La taille du shellcode est de : ",(len(shellcode)), "octets")
 print("\n")
