@@ -16,8 +16,14 @@ __________      .__          _________.__           .__  .__            ________
 
 #Récupération des paramètres
 
-ipv4 = sys.argv[1]
-port = sys.argv[2]
+#Vérification que l'ip et le port sont fournis en paramètres.
+
+if len(sys.argv) != 3:
+    print("Paramètres incorrecte lancez le programme de cette manière : python generateur.py 10.10.10.10 4444")
+    exit(1)
+else:
+    ipv4 = sys.argv[1]
+    port = sys.argv[2]
 
 #Transformation de l'ip en hexa pour être utilisée dans le shellcode.
 
