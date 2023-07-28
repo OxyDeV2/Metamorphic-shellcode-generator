@@ -49,9 +49,12 @@ def shellcodize(s):
     shellcode = shellcode.replace('X', '\\x')
     print("Shellcode polymorphique: \n")
     print(shellcode)
+
+
+
 shellcodize(shellcode)
 
-
+print(shellcodeart)
 
 print("------------")
 print("La taille du shellcode est de : ",(len(shellcode)), "octets")
@@ -280,7 +283,7 @@ shellcode += random.choice(list_lastcallsys)
 
 # ASCII Art pour flex
 
-print(shellcodeart)
 
-shellcodize(shellcode)
-print("Taille shellcode : ", len(shellcode))
+
+#shellcodize(shellcode)
+#print("Taille shellcode : ", len(shellcode))
